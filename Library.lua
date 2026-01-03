@@ -1,15 +1,15 @@
-print("Library carregada")
+warn("Library carregada")
 
 local TDS = {}
 TDS.__index = TDS
 
 function TDS.new()
-    print("Instância criada")
+    warn("Instância criada")
     return setmetatable({}, TDS)
 end
 
 function TDS:Test()
-    print("Test OK")
+    warn("Test OK")
 end
 
 return function()
