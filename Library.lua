@@ -1,31 +1,23 @@
--- auto-strat | Library.lua
+local Library = {}
+Library.__index = Library
 
-local TDS = {}
-TDS.__index = TDS
-
-function TDS.new()
-    local self = setmetatable({}, TDS)
-
-    self.AutoSkip = _G.AutoSkip or false
-
-task.spawn(function()
-    while task.wait(2) do
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "auto-strat",
-            Text = "loop rodando",
-            Duration = 1
-        })
-    end
-end)
-
-
+function Library.new()
+    local self = setmetatable({}, Library)
     return self
 end
 
-function TDS:Loadout(...)
-    self.LoadoutTowers = {...}
+function Library:AutoSkip()
+    local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
+
+    task.spawn(function()
+        while task.wait(1) do
+            pcall(function()
+                Remotes.VoteSkip:FireServer()
+            end)
+        end
+    end)
 end
 
 return function()
-    return TDS.new()
+    return Library.new()
 end
