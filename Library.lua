@@ -8,18 +8,16 @@ function TDS.new()
 
     self.AutoSkip = _G.AutoSkip or false
 
-    task.spawn(function()
-        while task.wait(1) do
-            if self.AutoSkip then
-                pcall(function()
-                    game:GetService("ReplicatedStorage")
-                        .Remotes
-                        .VoteSkip
-                        :FireServer()
-                end)
-            end
-        end
-    end)
+task.spawn(function()
+    while task.wait(2) do
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "auto-strat",
+            Text = "loop rodando",
+            Duration = 1
+        })
+    end
+end)
+
 
     return self
 end
