@@ -1,15 +1,31 @@
-warn("Library carregada")
+-- auto-strat | Library.lua
 
 local TDS = {}
 TDS.__index = TDS
 
 function TDS.new()
-    warn("Instância criada")
-    return setmetatable({}, TDS)
+    local self = setmetatable({}, TDS)
+
+    self.AutoSkip = _G.AutoSkip or false
+
+    task.spawn(function()
+        while task.wait(1) do
+            if self.AutoSkip then
+                pcall(function()
+                    game:GetService("ReplicatedStorage")
+                        .Remotes
+                        .VoteSkip
+                        :FireServer()
+                end)
+            end
+        end
+    end)
+
+    return self
 end
 
-function TDS:Test()
-    warn("Test OK")
+function TDS:Loadout(...)
+    self.LoadoutTowers = {...}
 end
 
 return function()
